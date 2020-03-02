@@ -9,7 +9,7 @@ var defaultLayers = platform.createDefaultLayers();
 // Instantiate (and display) a map object:
 var map = new H.Map(
   document.getElementById("mapContainer"),
-  defaultLayers.vector.normal.map,
+  defaultLayers.vector.normal.traffic,
   {
     zoom: 12,
     center: { lat: -6.879518, lng: 107.590082 }
@@ -55,22 +55,8 @@ var coords = [
   { lat: -6.913928052671932, lng: 107.57920155414376 }
 ];
 
-//Create the svg mark-up
-var svgMarkup = "";
-
 coords.forEach(function(value, index) {
-  var svgMarkup =
-    '<svg width="24" height="24" ' +
-    'xmlns="http://www.w3.org/2000/svg">' +
-    '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
-    'height="22" /><text x="12" y="18" font-size="12pt" ' +
-    'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
-    'fill="white">' +
-    (index + 1) +
-    "</text></svg>";
-
-  var icon = new H.map.Icon(svgMarkup),
-    marker = new H.map.Marker(value, { icon: icon });
+  var marker = new H.map.Marker(value);
 
   // add custom data to the marker
   marker.setData(index + 1);
