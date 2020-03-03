@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <title>Maps Here</title>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+</head>
+
+<body>
+    <div style="width: 100%; height: 700px" id="mapContainer"></div>
+    <script>
+        // Initialize the platform object:
+        var platform = new H.service.Platform({
+            'apikey': 'P1pW6jQAuEzQsilkH4NPdHHqaUbuHot9X9XnyTSsgrE'
+        });
+
+        // Obtain the default map types from the platform object
+        var defaultLayers = platform.createDefaultLayers();
+
+        // Instantiate (and display) a map object:
+        var map = new H.Map(
+            document.getElementById('mapContainer'),
+            defaultLayers.vector.normal.map,
+            {
+                zoom: 10,
+                center: { lng: 13.4, lat: 52.51 }
+            });
+
+        // Enable the event system on the map instance:
+        var mapEvents = new H.mapevents.MapEvents(map);
+
+        // UI Instance
+        var ui = H.ui.UI.createDefault(map, defaultLayers);
+        // Create an info bubble object at a specific geographic location:
+        var bubble = new H.ui.InfoBubble({ lng: 13.4, lat: 52.51 }, {
+            content: '<b>Hello World!</b>'
+        });
+
+        // Add info bubble to the UI:
+        ui.addBubble(bubble);
+
+        map.addEventListener('tap', function (evt) {
+            // Log 'tap' and 'mouse' events:
+            console.log(evt.type, evt.currentPointer.type);
+            if (evt.type == 'tap') {
+                console.log("Tap.. tap..");
+            }
+        });
+
+        map.addEventListener('drag', function (evt) {
+            // console.log(evt.type, evt.currentPointer.type);
+            console.log('drag..');
+        });
+
+        var svgMarkup = '<svg width="24" height="24" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
+            'height="22" /><text x="12" y="18" font-size="12pt" ' +
+            'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+            'fill="white">H</text></svg>';
+
+        var icon = new H.map.Icon(svgMarkup),
+            coords1 = { lat: 51.53075, lng: 13.3851 },
+            marker1 = new H.map.Marker(coords1, { icon: icon }),
+            coords2 = { lat: 52.53075, lng: 13.3851 },
+            marker2 = new H.map.Marker(coords2, { icon: icon }),
+            coords3 = { lat: 53.53075, lng: 13.3851 },
+            marker3 = new H.map.Marker(coords3, { icon: icon });
+
+        var circle = new H.map.Circle({ lat: 52.51, lng: 13.4 }, 8000);
+
+        // Add the marker to the map and center the map at the location of the marker:
+        map.addObject(marker1);
+        map.addObject(marker2);
+        map.addObject(marker3);
+        map.setZoom(13);
+        map.setCenter(coords1);
+        map.addObject(circle);
+
+        // Instantiate the default behavior, providing the mapEvents object:
+        // Bisa ngasih default buat move, zoom
+        var behavior = new H.mapevents.Behavior(mapEvents);
+    </script>
+</body>
+
+</html>
