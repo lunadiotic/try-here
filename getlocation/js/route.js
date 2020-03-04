@@ -64,7 +64,7 @@ if (navigator.geolocation) {
                 // Create a polyline to display the route:
                 var routeLine = new H.map.Polyline(linestring, {
                     style: {
-                        lineWidth: 10,
+                        lineWidth: 5,
                         strokeColor: 'rgba(0, 128, 255, 0.7)',
                         lineTailCap: 'arrow-tail',
                         lineHeadCap: 'arrow-head'
@@ -74,7 +74,7 @@ if (navigator.geolocation) {
                 // Create a patterned polyline:
                 var routeArrows = new H.map.Polyline(linestring, {
                     style: {
-                        lineWidth: 10,
+                        lineWidth: 5,
                         fillColor: 'white',
                         strokeColor: 'rgba(255, 255, 255, 1)',
                         lineDash: [0, 2],
